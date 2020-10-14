@@ -12,35 +12,37 @@ API_KEY = os.getenv("API_KEY")
 # continue with your application here
 url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define"
 #print("Hello, {}".format(input("What is your name?")))
-word = input("What term do you want to look for?")
-querystring = {"term":word}
+words = input("What term do you want to look for?").split(",")
+for i in words:
+    word = i
+    querystring = {"term":word}
 
-headers = {
-    'x-rapidapi-host': API_HOST,
-    'x-rapidapi-key': API_KEY
-    }
+    headers = {
+        'x-rapidapi-host': API_HOST,
+        'x-rapidapi-key': API_KEY
+        }
 
-response = requests.request("GET", url, headers=headers, params=querystring)
+    response = requests.request("GET", url, headers=headers, params=querystring)
 
-#saving it as a dict so I can parse some information
-data = json.loads(response.text)                         
+    #saving it as a dict so I can parse some information
+    data = json.loads(response.text)                         
 
-#looping through the definition string to get rid of unwanted chars
-the_definition = "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"])
-                                                       
-#creating the dict cache after assigning value to the_definition, otherwise it'll be undefined
-cache = {}                                           #so this is the way to store information in a dict
-cache["definitions"] = []                            
-cache["definitions"].append({word: the_definition})  
-
-
-if word in cache["definitions"][0].keys():  #need to ask Paolo how to test  lines 37 & 38, cuz I think it's skipping them
-    print(word.capitalize()+ " is "+ cache["definitions"][0][word]) #since the app only asks for words only when you
-else:                                                               #run "pipenv run python src/app.py"
-    print(word.capitalize() + " is "+ the_definition) 
+    #looping through the definition string to get rid of unwanted chars
+    the_definition = "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"])
+                                                        
+    #creating the dict cache after assigning value to the_definition, otherwise it'll be undefined
+    cache = {}                                           #so this is the way to store information in a dict
+    cache["definitions"] = []                            
+    cache["definitions"].append({word: the_definition})  
 
 
+    if word in cache["definitions"][0].keys():  #need to ask Paolo how to test  lines 37 & 38, cuz I think it's skipping them
+        print(word.capitalize()+ " is "+ cache["definitions"][0][word]) #since the app only asks for words only when you
+    else:                                                               #run "pipenv run python src/app.py"
+        print(word.capitalize() + " is "+ the_definition) 
 
-#this is how to store new data in a json file
-with open("json_file.json", "w+") as f:                 
-    json.dump(cache, f)
+
+
+    #this is how to store new data in a json file
+    with open("json_file.json", "w+") as f:                 
+        json.dump(cache, f)
