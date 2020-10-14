@@ -21,13 +21,26 @@ headers = {
     }
 
 response = requests.request("GET", url, headers=headers, params=querystring)
-data = json.loads(response.text)
+
+#saving it as a dict so I can parse some information
+data = json.loads(response.text)                         
+
+#looping through the definition string to get rid of unwanted chars
 the_definition = "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"])
-print(word.capitalize() + " is "+ the_definition)
+                                                       
+#creating the dict cache after assigning value to the_definition, otherwise it'll be undefined
+cache = {}                                           #so this is the way to store information in a dict
+cache["definitions"] = []                            
+cache["definitions"].append({word: the_definition})  #so I can append it later to  a json format bc
+                                                     # dict is an equivalent of json object
 
-new = {}
-new["definitions"] = []
-new["definitions"].append({word: the_definition})
+if word in cache["definitions"][0].keys():  #need to ask Paolo how to test  lines 37 & 38, cuz I think it's skipping them
+    print(cache["definitions"][word].capitalize()+ " is "+ cache["definitions"][the_definition])
+else:
+    print(word.capitalize() + " is "+ the_definition) 
 
-with open("json_file.json", "w+") as f:
-    json.dump(new, f)
+
+
+#this is how to store new data in a json file
+with open("json_file.json", "w+") as f:                 
+    json.dump(cache, f)
