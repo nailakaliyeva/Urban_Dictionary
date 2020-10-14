@@ -11,6 +11,7 @@ API_KEY = os.getenv("API_KEY")
 
 # continue with your application here
 url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define"
+#print("Hello, {}".format(input("What is your name?")))
 word = input("What term do you want to look for?")
 querystring = {"term":word}
 
@@ -22,4 +23,4 @@ headers = {
 response = requests.request("GET", url, headers=headers, params=querystring)
 l = response.text
 data = json.loads(l)
-print(data)
+print(word.capitalize() + " is "+ "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"]))
