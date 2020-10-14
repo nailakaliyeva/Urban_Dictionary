@@ -1,4 +1,4 @@
-import requests, os, json
+import requests, os, json, sys
 
 # Retrieve your API credentials from the .env file
 if os.getenv("API_KEY") is None or os.getenv("API_KEY") == "":
@@ -12,9 +12,12 @@ API_KEY = os.getenv("API_KEY")
 # continue with your application here
 url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define"
 #print("Hello, {}".format(input("What is your name?")))
-words = input("What term do you want to look for?").split(",")
-for i in words:
-    word = i
+#words = input("What term do you want to look for?").split(",")
+list_sys = sys.argv[1:]
+for i in range(0,len(list_sys)):
+    word = list_sys[i]
+#for i in words: 
+    #word = i
     querystring = {"term":word}
 
     headers = {
