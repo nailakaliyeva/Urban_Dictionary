@@ -21,6 +21,13 @@ headers = {
     }
 
 response = requests.request("GET", url, headers=headers, params=querystring)
-l = response.text
-data = json.loads(l)
-print(word.capitalize() + " is "+ "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"]))
+data = json.loads(response.text)
+the_definition = "".join([i for i in data["list"][0]["definition"] if i != "[" and i!="]"])
+print(word.capitalize() + " is "+ the_definition)
+
+new = {}
+new["definitions"] = []
+new["definitions"].append({word: the_definition})
+
+with open("json_file.json", "w+") as f:
+    json.dump(new, f)
