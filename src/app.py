@@ -31,12 +31,12 @@ the_definition = "".join([i for i in data["list"][0]["definition"] if i != "[" a
 #creating the dict cache after assigning value to the_definition, otherwise it'll be undefined
 cache = {}                                           #so this is the way to store information in a dict
 cache["definitions"] = []                            
-cache["definitions"].append({word: the_definition})  #so I can append it later to  a json format bc
-                                                     # dict is an equivalent of json object
+cache["definitions"].append({word: the_definition})  
+
 
 if word in cache["definitions"][0].keys():  #need to ask Paolo how to test  lines 37 & 38, cuz I think it's skipping them
-    print(cache["definitions"][word].capitalize()+ " is "+ cache["definitions"][the_definition])
-else:
+    print(word.capitalize()+ " is "+ cache["definitions"][0][word]) #since the app only asks for words only when you
+else:                                                               #run "pipenv run python src/app.py"
     print(word.capitalize() + " is "+ the_definition) 
 
 
