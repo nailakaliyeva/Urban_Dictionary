@@ -4,7 +4,7 @@
 
 The [Urban Dictionary](https://www.urbandictionary.com/) is an amazing resource for english language lovers; It features the accurate definitions of words, not like other services like Wikipedia, Oxford, etc. 😅
 
-In this project your are going to build a terminal based (CLI) dictionary. !
+In this project your are going to build a terminal based (CLI) dictionary. 
 
 ### Before you begin
 
